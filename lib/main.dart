@@ -1,60 +1,72 @@
 import 'package:flutter/material.dart';
 import 'theme.dart';
-import 'pages/الصفحةالرئيسية.dart';
-import 'pages/صفحةالسوق.dart';
-import 'pages/صفحةالذكاءالاصطناعي.dart';
-import 'pages/صفحةالتحليلات.dart';
-import 'pages/صفحةالأخبار.dart';
+import 'pages/home_page.dart';
+import 'pages/market_page.dart';
+import 'pages/ai_page.dart';
+import 'pages/analytics_page.dart';
+import 'pages/news_page.dart';
 
 void main() {
-  runApp(AlphaTrustApp());
+  runApp(const AlphaTrustApp());
 }
 
 class AlphaTrustApp extends StatelessWidget {
+  const AlphaTrustApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: AppTheme.lightTheme,
+      title: 'AlphaTrust',
+      theme: AlphaTrustTheme.lightTheme,
       debugShowCheckedModeBanner: false,
-      home: HomeNavigator(),
+      home: const MainPage(),
     );
   }
 }
 
-class HomeNavigator extends StatefulWidget {
+class MainPage extends StatefulWidget {
+  const MainPage({Key? key}) : super(key: key);
+
   @override
-  _HomeNavigatorState createState() => _HomeNavigatorState();
+  State<MainPage> createState() => _MainPageState();
 }
 
-class _HomeNavigatorState extends State<HomeNavigator> {
+class _MainPageState extends State<MainPage> {
   int _currentIndex = 0;
-  final List<Widget> _الصفحات = [
-    الصفحةالرئيسية(),
-    صفحةالسوق(),
-    صفحةالذكاءالاصطناعي(),
-    صفحةالتحليلات(),
-    صفحةالأخبار(),
+
+  final List<Widget> _pages = const [
+    HomePage(),
+    MarketPage(),
+    AIPage(),
+    AnalyticsPage(),
+    NewsPage(),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _الصفحات[_currentIndex],
+      body: _pages[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        selectedItemColor: AppTheme.ذهبي,
-        unselectedItemColor: AppTheme.رماديفاتح,
+        selectedItemColor: AlphaTrustTheme.accentColor,
+        unselectedItemColor: AlphaTrustTheme.secondaryTextColor,
         onTap: (index) {
           setState(() {
             _currentIndex = index;
           });
         },
-        items: [
+        items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'الرئيسية'),
           BottomNavigationBarItem(icon: Icon(Icons.show_chart), label: 'السوق'),
-          BottomNavigationBarItem(icon: Icon(Icons.smart_toy), label: 'الذكاء الاصطناعي'),
-          BottomNavigationBarItem(icon: Icon(Icons.analytics), label: 'التحاليل'),
-          BottomNavigationBarItem(icon: Icon(Icons.newspaper), label: 'الأخبار'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.smart_toy),
+            label: 'الذكاء الاصطناعي',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.analytics),
+            label: 'التحاليل',
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.article), label: 'الأخبار'),
         ],
       ),
     );
